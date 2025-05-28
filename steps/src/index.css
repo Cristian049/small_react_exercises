@@ -1,0 +1,91 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+}
+
+.steps {
+  width: 700px;
+  background-color: #f7f7f7;
+  border-radius: 7px;
+  padding: 25px 100px;
+  margin: 100px auto;
+}
+
+.numbers {
+  display: flex;
+  justify-content: space-between;
+}
+
+.numbers div {
+  background-color: #dddddd;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.numbers .active {
+  background-color: #7950f2;
+  color: #fff;
+}
+
+.message {
+  text-align: center;
+  font-size: 24px;
+  margin: 40px 0;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttons button {
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 100px;
+  background-color: #c2c2c2;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #7950f2;
+  color: #fff;
+}
+
+.buttons button span {
+  font-size: 16px;
+  line-height: 1;
+}
+
+h3 {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 40px;
+  color: inherit;
+}
+
+.close:hover {
+  color: #7950f2;
+}
