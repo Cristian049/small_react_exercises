@@ -20,10 +20,6 @@ function App() {
 
   useEffect(
     function () {
-      if (!amount) {
-        setAmount(1);
-        return;
-      }
       async function convert() {
         try {
           setIsLoading(true);
@@ -45,19 +41,14 @@ function App() {
 
   return (
     <div>
-      <input
-        type="number"
-        value={amount}
-        onChange={handleNumber}
-        disabled={isLoading}
-      />
-      <select onChange={handleSelect1} value={fromCur} disabled={isLoading}>
+      <input type="number" value={amount} onChange={handleNumber} />
+      <select onChange={handleSelect1} value={fromCur}>
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
         <option value="RON">RON</option>
         <option value="INR">INR</option>
       </select>
-      <select onChange={handleSelect2} value={toCur} disabled={isLoading}>
+      <select onChange={handleSelect2} value={toCur}>
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
         <option value="RON">RON</option>
