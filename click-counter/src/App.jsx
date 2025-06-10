@@ -27,7 +27,6 @@ function App() {
   useEffect(
     function () {
       if (!started || time === 0) {
-        console.log("Timer stopped");
         return;
       }
 
@@ -42,14 +41,16 @@ function App() {
   );
   return (
     <div>
-      <h2>
+      <div>
         {!started && "Start the click counter challange"}
         {started && time > 0 && `You have ${time} seconds left!`}
         {started && time === 0 && onTimeEnd()}
-      </h2>
+      </div>
       {!started ? <button onClick={handleStart}>Start</button> : ""}
       {started && time > 0 && <button onClick={handleCounter}>+1</button>}
-      {started && time === 0 && <button onClick={handleResetm}>Reset</button>}
+      {started && time === 0 && (
+        <button onDoubleClick={handleReset}>Reset</button>
+      )}
     </div>
   );
 }
