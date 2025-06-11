@@ -13,8 +13,10 @@ import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
+import SelectNumber from "./SelectNumber";
 
 const SECS_PER_QUESTION = 30;
+
 let storedHighScore = 0;
 try {
   const value = localStorage.getItem("highscore");
@@ -25,13 +27,14 @@ try {
 
 const initialState = {
   questions: [],
-  // 'loading','ready', 'error', 'active','finished'
+  // 'loading','ready', 'error', 'active','finished', 'selecting'
   status: "loading",
   index: 0,
   answer: null,
   points: 0,
   highscore: storedHighScore,
   secondsRemaining: null,
+  numberOfQuestions: 0,
 };
 function reduce(state, action) {
   switch (action.type) {
@@ -39,7 +42,7 @@ function reduce(state, action) {
       return {
         ...state,
         questions: action.payload,
-        status: "ready",
+        status: "selecting",
       };
     case "dataFailed":
       return {
@@ -50,7 +53,13 @@ function reduce(state, action) {
       return {
         ...state,
         status: "active",
-        secondsRemaining: state.questions.length * SECS_PER_QUESTION,
+        secondsRemaining: state.numberOfQuestions * SECS_PER_QUESTION,
+      };
+    case "selectNumOfQuestions":
+      return {
+        ...state,
+        status: "ready",
+        numberOfQuestions: action.payload,
       };
     case "newAnswer":
       const question = state.questions.at(state.index);
@@ -80,7 +89,7 @@ function reduce(state, action) {
       return {
         ...initialState,
         questions: state.questions,
-        status: "ready",
+        status: "selecting",
         highscore: state.highscore,
       };
     case "tick":
@@ -96,13 +105,27 @@ function reduce(state, action) {
 
 export default function App() {
   const [
-    { questions, status, index, answer, points, highscore, secondsRemaining },
+    {
+      questions,
+      status,
+      index,
+      answer,
+      points,
+      highscore,
+      secondsRemaining,
+      numberOfQuestions,
+    },
     dispatch,
   ] = useReducer(reduce, initialState);
 
-  const numQuestions = questions.length;
+  const numQuestions = numberOfQuestions;
 
-  const sumPoints = questions.reduce((prev, curr) => prev + curr.points, 0);
+  const selectedQuestions = questions.slice(0, numQuestions);
+
+  const sumPoints = selectedQuestions.reduce(
+    (prev, curr) => prev + curr.points,
+    0
+  );
 
   useEffect(function () {
     fetch("http://localhost:3000/questions")
@@ -126,6 +149,12 @@ export default function App() {
         {status === "error" && <Error />}
         {status === "ready" && (
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
+        )}
+        {status === "selecting" && (
+          <SelectNumber
+            dispatch={dispatch}
+            numberOfQuestions={numberOfQuestions}
+          />
         )}
         {status === "active" && (
           <>

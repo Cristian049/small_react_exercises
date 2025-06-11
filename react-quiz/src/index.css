@@ -88,6 +88,18 @@ h4 {
   flex-direction: column;
   align-items: center;
 }
+.selecting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.selecting select:hover {
+  background-color: var(--color-darkest);
+}
+.selecting select:focus {
+  background-color: var(--color-darkest);
+}
 
 .progress {
   margin-bottom: 4rem;
@@ -115,7 +127,8 @@ progress {
   border-radius: 100px;
 }
 
-.btn {
+.btn,
+.selecting select {
   display: block;
   font-family: inherit;
   color: inherit;
